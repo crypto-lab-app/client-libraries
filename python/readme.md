@@ -1,12 +1,7 @@
-# Libraries for CryptoLab
+# Libraries Python for CryptoLab
 Website: https://www.crypto-lab.io  
 Documentation: https://www.crypto-lab.io/documentation  
 Swagger: https://www.crypto-lab.io/swagger
-
-Libraries for:
-* Python3
-* .NET (soon)
-* PHP (soon)
 
 
 ## Python
@@ -32,11 +27,5 @@ def on_error(message):
     print(message) # ex: quota reached, data not avaible, plan inactive, etc.
 ```
 
-## .NET
-soon
-
-
-## PHP
-soon
 
 ![Logo](https://1.gravatar.com/avatar/5121577298f39a1661507198f8615319a7d7a14fad36f9ec52d20ae0d446bf69?size=128)
