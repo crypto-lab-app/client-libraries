@@ -24,10 +24,7 @@ class CryptoLab:
         status_download = self.__download_files(self.exchange, self.market, self.start_date, self.end_date)
         if(not status_download):
             return
-        
-        # Init variable
-        trades = []
-        last_trade = []
+
         # For each date selected
         for date in self.dates:
             
@@ -120,7 +117,6 @@ class CryptoLab:
            
     # Return an array with all date to replay     
     def __get_dates_to_replay(self, start_date: str, end_date: str):
-        start_d = datetime.strptime(start_date, '%Y-%m-%d')
         end_d = datetime.strptime(end_date, '%Y-%m-%d')
         tmp_d = datetime.strptime(start_date, '%Y-%m-%d')
         res = []
