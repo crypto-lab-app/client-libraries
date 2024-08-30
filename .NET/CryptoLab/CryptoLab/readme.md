@@ -2,9 +2,10 @@
 Website: https://www.crypto-lab.io  
 Documentation: https://www.crypto-lab.io/documentation  
 Swagger: https://www.crypto-lab.io/swagger
+Git: https://github.com/crypto-lab-io/client-libraries
 
 ## .NET
-Available on Microsoft Nuget: https://www.nuget.org/packages/CryptoLab/
+Available on Microsoft Nuget: https://www.nuget.org/packages/CryptoLab/  
 Sample to use it to replay data 
 ```csharp
 using CryptoLab;
@@ -31,22 +32,30 @@ client.init_replay(callback, new Exchange { exchange = "binance" }, new Market {
 client.start_replay();
 Console.WriteLine("Strating replay for Binance btc_usdt (downloading data in " + client.get_cache_directory() + ". Could be long)");
 
-// Callback on event (trade and orderbook)
-void  callback(Trade trade)
+// Callback on event (message or trade)
+void  callback(object data)
 {
     /* Add your trading algorithm here */
 
-    if(trade != null) // If you stop (not definitivly) the replay, the callback function is called but the trade is null
-        Console.WriteLine("Trade id: " + trade.trade_id);
 
-    // Show error (nothing if no error)
-    foreach (string error in client.get_errors())
-        Console.WriteLine("Error: " + error);
+    // If you stop (not definitivly) the replay, the callback function is called but the trade is null
+    if (data == null)
+        return;
+
+    // If data is a message
+    if (data is string)
+        Console.WriteLine("Message: " + data);
+
+    // If data is trade
+    if(data is Trade) {
+        Trade? trade = data as Trade;
+        Console.WriteLine("Trade id: " + trade.trade_id);
+    }
 }
 ```
 
 Output:
-![Logo](https://www.crypto-lab.io/img/resultat_lib.png)
+![Logo](https://raw.githubusercontent.com/crypto-lab-io/client-libraries/main/Other/result_lib.png)
 
 
-![Logo](https://1.gravatar.com/avatar/5121577298f39a1661507198f8615319a7d7a14fad36f9ec52d20ae0d446bf69?size=128)
+![Logo](https://raw.githubusercontent.com/crypto-lab-io/client-libraries/main/Other/logo_cl_2.png)

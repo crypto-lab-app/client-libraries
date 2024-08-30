@@ -27,7 +27,7 @@ namespace CryptoLab
         // Variables globales - replay part
         private Thread thread_replay = null;
         private ShouldTread thread_shouldState = ShouldTread.Run;
-        public delegate void CallBack(Trade trade);
+        public delegate void CallBack(object data);
         private CallBack callback = null;
         private Exchange replay_exchange = null;
         private Market replay_market = null;
@@ -89,8 +89,7 @@ namespace CryptoLab
             }
             catch (Exception ex)
             {
-                this.add_error("get_exchanges - " + ex.Message);
-                return null;
+                throw new Exception("get_exchanges - " + ex.Message);
             }
         }
 
@@ -110,8 +109,7 @@ namespace CryptoLab
             }
             catch (Exception ex)
             {
-                this.add_error("get_markets - " + ex.Message);
-                return null;
+                throw new Exception("get_markets - " + ex.Message);
             }
         }
 
@@ -134,8 +132,7 @@ namespace CryptoLab
             }
             catch (Exception ex)
             {
-                this.add_error("get_files - " + ex.Message);
-                return null;
+                throw new Exception("get_files - " + ex.Message);
             }
         }
 
@@ -151,17 +148,14 @@ namespace CryptoLab
                 RestResponse response = client.Execute(request);
                 // If error
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
-                {
-                    this.add_error(response.Content, true);
-                    return null;
-                }
+                    throw new Exception("Status code: " + response.StatusCode);
+                
 
                 return response.Content;
             }
             catch (Exception ex)
             {
-                this.add_error("Fail request. catch:  " + ex.Message);
-                return string.Empty;
+                throw new Exception("Fail request. catch:  " + ex.Message);
             }
         }
 
@@ -249,7 +243,7 @@ namespace CryptoLab
                 // Tests files
                 if ((this.replay_type == null || this.replay_type == "trade") && file_trade.Exists == false)
                 {
-                    add_error("init_replay - file trade " + file_trade.FullName + " doesn't exist.");
+                    this.callback("init_replay - file trade " + file_trade.FullName + " doesn't exist.");
                     continue;
                 }
                    
@@ -355,7 +349,7 @@ namespace CryptoLab
 
                 if (list_files.Count == 0)
                 {
-                    add_error("No file with this parameters");
+                    this.callback("No file with this parameters");
                     return false;
                 }
 
@@ -375,23 +369,22 @@ namespace CryptoLab
                     RestRequest request = new RestRequest("data/file/" + exchange.exchange.ToLower() + "/" + market.market.ToLower() + "/" + file.date, Method.Get);
                     RestResponse response = client.Execute(request);
                     if (response.StatusCode != System.Net.HttpStatusCode.OK)
-                    {
-                        add_error(response.Content, true);
-                        return false;
-                    }
-
+                        throw new Exception("Status code: " + response.StatusCode);
 
                     // Save byte and close file
                     FileStream output = new FileStream(output_path.FullName, FileMode.Create);
                     output.Write(response.RawBytes);
                     output.Flush();
                     output.Close();
+
+                    // Callback
+                    this.callback("File download: " + exchange.exchange.ToLower() + " " + market.market.ToLower() + " " + file.date);
                 }
                 return true;
             }
             catch (Exception ex)
             {
-                add_error("download_files - error during files download: " + ex.Message);
+                this.callback("download_files - error during files download: " + ex.Message);
                 return false;
             }
         }
@@ -407,8 +400,7 @@ namespace CryptoLab
             // Test dates
             if (start_date > end_date)
             {
-                add_error("start_date must be before end_date");
-                return res;
+                throw new Exception("start_date must be before end_date");
             }
 
             // Create list of dates
@@ -421,34 +413,6 @@ namespace CryptoLab
             return res;
         }
 
-        // Add error to the stack
-        private void add_error(string data, bool deserializable = false)
-        {
-            Error error = null;
-            if (deserializable == true)
-                error = JsonSerializer.Deserialize<Error>(data.Remove(0, 1));
-
-            errors.Add(data);
-            if (this.show_errors)
-            {
-                if (error != null)
-                    Console.WriteLine(error.message);
-                else
-                    Console.WriteLine(data);
-            }
-            return;
-        }
-
-        /// <summary>
-        /// Get the list of errors and clear it
-        /// </summary>
-        /// <returns>List of string errors</returns>
-        public List<string> get_errors()
-        {
-            List<string> tmp = errors;
-            errors.Clear();
-            return tmp;
-        }
 
         // Force to free memory for a list
         private void free_object(object obj)
