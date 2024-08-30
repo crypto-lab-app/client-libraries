@@ -34,7 +34,7 @@ class CryptoLab:
                 self.__on_error('File cache-cl/{}/trade/{}/{}.csv.gz doesn\'t exist. Make sure a file exist for this exchange, market and date using API'.format(self.exchange, self.market, date))
                 continue
             
-            # Read event and callback each        
+            # Read event and callback for each trade        
             for last_trade in trades:
                 self.callback(last_trade)
             
@@ -99,6 +99,7 @@ class CryptoLab:
                     if(req.status_code == 200):
                         self.__create_subdirectory(output_file)
                         open(output_file, 'wb').write(req.content)
+                        self.callback(None, 'File downloaded: ' + exchange + ' ' + market + ' ' + file['date'])
                     else:
                         self.__on_error(req.content)
                         return False

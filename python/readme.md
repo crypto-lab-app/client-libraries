@@ -2,7 +2,7 @@
 Website: https://www.crypto-lab.io  
 Documentation: https://www.crypto-lab.io/documentation  
 Swagger: https://www.crypto-lab.io/swagger
-
+Git: https://github.com/crypto-lab-io/client-libraries 
 
 ## Python
 Install library from Pypi ```pip install cryptolab```
@@ -17,9 +17,14 @@ cl = cryptolab.CryptoLab('{YOUR_API_KEY}', on_error)
 # Init the raplayer with the parameters
 cl.init_replayer(event, '{EXCHANGE}', '{MARKET}', '{START_DATE}', '{END_DATE}')
 
-# On event - callback
-def event(trade):
-    print(trade)
+# Replay  On event - callback
+def event(self, trade, message=None):
+
+    if(message):
+        print(message)
+
+    if(trade):
+        print(trade)
     # add you algorithm here to backtest your strategy
 
 # On event error
