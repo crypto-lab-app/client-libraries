@@ -2,6 +2,15 @@
 python/build
 python/cryptolab.egg-info
 
-save_c.net
+# .NET
+.NET/cryptoLab/.vs
+.NET/cryptoLab/cryptoLab.sln
+.NET/cryptoLab/TestLib
+.NET/cryptoLab/cryptoLab/bin
+.NET/cryptoLab/cryptoLab/obj
+.NET/cryptoLab/cryptoLab/CryptoLab.csproj
+.NET/cryptoLab/cryptoLab/CryptoLab.generated.sln
+
+
 publication_notes.txt
 
