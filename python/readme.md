@@ -1,7 +1,7 @@
 # Libraries Python for CryptoLab
 Website: https://www.crypto-lab.io  
 Documentation: https://www.crypto-lab.io/documentation  
-Swagger: https://www.crypto-lab.io/swagger
+Swagger: https://www.crypto-lab.io/swagger  
 Git: https://github.com/crypto-lab-io/client-libraries 
 
 ## Python
