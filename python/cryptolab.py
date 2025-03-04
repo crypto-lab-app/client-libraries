@@ -47,7 +47,6 @@ class CryptoLab:
             return False
 
         return pd.read_csv(filename, compression='gzip', sep='\t', quotechar='"', dtype=CryptoLab._COLUMNS_TRADE_).to_dict('records')
-        
     
     # Get list of files matching to the parameters
     def get_files(self, exchange: str, market: str, start_date: str, end_date: str):
@@ -89,6 +88,8 @@ class CryptoLab:
     def __download_files(self, exchange: str, market: str, start_date: str, end_date: str):   
         # Download files usefull between params dates
         files = self.get_files(exchange, market, start_date, end_date)
+        if(not files):
+            return False
         
         for file in files:
             # Try to download file in not in cache

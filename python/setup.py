@@ -3,8 +3,8 @@ from setuptools import setup, find_namespace_packages
 with open('readme.md', 'r') as f:
     description = f.read()
 
-setup(name='Cryptolab',
-      version='0.0.5',
+setup(name='cryptolab',
+      version='0.0.7',
       description='Cryptolab library to replay historic data',
       url='https://www.crypto-lab.io',
       author='CryptoLab, Charles',
