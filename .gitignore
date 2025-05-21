@@ -3,6 +3,7 @@ python/build
 python/dist
 python/cryptolab.egg-info
 __pycache__
+.venv
 
 # .NET
 .NET/cryptoLab/.vs
