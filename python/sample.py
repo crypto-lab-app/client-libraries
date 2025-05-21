@@ -1,4 +1,4 @@
-import cryptolab
+import cryptolab.cryptolab as cryptolab
 
 class Sample:
     def __init__(self):

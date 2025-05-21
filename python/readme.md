@@ -1,8 +1,7 @@
 # Libraries Python for CryptoLab
-Website: https://www.crypto-lab.io  
-Documentation: https://www.crypto-lab.io/documentation  
-Swagger: https://www.crypto-lab.io/swagger  
-Git: https://github.com/crypto-lab-io/client-libraries 
+Website: https://www.crypto-lab.app   
+Documentation: https://www.crypto-lab.app/documentation  
+Swagger: https://www.crypto-lab.app/swagger  
 
 ## Python
 Install library from Pypi ```pip install cryptolab```

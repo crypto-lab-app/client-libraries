@@ -1,8 +1,8 @@
 # Libraries for CryptoLab
-Website: https://www.crypto-lab.io  
-Documentation: https://www.crypto-lab.io/documentation  
-Swagger: https://www.crypto-lab.io/swagger  
-Git: https://github.com/crypto-lab-io/client-libraries
+Website: https://www.crypto-lab.app   
+Documentation: https://www.crypto-lab.app/documentation  
+Swagger: https://www.crypto-lab.app/swagger  
+Git: https://github.com/crypto-lab-app/client-libraries
 
 Libraries for:
 * Python3
@@ -49,7 +49,7 @@ using CryptoLab;
 Console.WriteLine("Verison: " + CryptoLab.CryptoLabAPI.version().ToString());
 
 // Init the client
-CryptoLabAPI client = new CryptoLabAPI("YOUR_APPI_KEY", true);
+CryptoLabAPI client = new CryptoLabAPI("{YOUR_API_KEY}", true);
 
 // Get list of exchanges available and displayt it
 List<Exchange> exchanges = client.get_exchanges();
@@ -90,7 +90,7 @@ void  callback(object data)
 ```
 
 Output:
-![Logo](https://raw.githubusercontent.com/crypto-lab-io/client-libraries/main/Other/result_lib.png)
+![Logo](https://raw.githubusercontent.com/crypto-lab-app/client-libraries/main/Other/result_lib.png)
 
 ## PHP
 soon

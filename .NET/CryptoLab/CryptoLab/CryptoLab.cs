@@ -18,7 +18,7 @@ namespace CryptoLab
     {
 
         // Variables globales
-        private const string _BASE_API_ = "https://api.crypto-lab.io/";
+        private const string _BASE_API_ = "https://api.crypto-lab.app/";
         private bool show_errors = false;
         private string apiKey = null;
         private RestClient client = null;

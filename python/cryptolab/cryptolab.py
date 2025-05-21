@@ -4,7 +4,7 @@ import os
 from datetime import datetime, timedelta
 
 class CryptoLab:
-    _BASE_API_ = 'https://api.crypto-lab.io/'
+    _BASE_API_ = 'https://api.crypto-lab.app/'
     _COLUMNS_TRADE_ = {'timestamp': 'int64', 'base_currency': 'category', 'counter_currency': 'category', 'trade_time':'int64', 'trade_id':'int64', 'price':'float64', 'size':'float64'}
    
     
@@ -89,6 +89,7 @@ class CryptoLab:
         # Download files usefull between params dates
         files = self.get_files(exchange, market, start_date, end_date)
         if(not files):
+            self.__on_error('No file for this request')
             return False
         
         for file in files:

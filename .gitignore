@@ -2,6 +2,7 @@
 python/build
 python/dist
 python/cryptolab.egg-info
+__pycache__
 
 # .NET
 .NET/cryptoLab/.vs
@@ -13,3 +14,4 @@ python/cryptolab.egg-info
 .NET/cryptoLab/cryptoLab/CryptoLab.generated.sln
 
 publication_notes.txt
+.DS_Store
