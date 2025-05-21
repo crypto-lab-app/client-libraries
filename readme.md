@@ -16,16 +16,16 @@ Install library from Pypi ```pip install cryptolab```
 
 Sample to use it to replay data 
 ```python
-import cryptolab
+from cryptolab import CryptoLab
 
 # Init lib with api key
-cl = cryptolab.CryptoLab('{YOUR_API_KEY}', on_error)
+cl = CryptoLab('{YOUR_API_KEY}', on_error)
 
 # Init the raplayer with the parameters
-cl.init_replayer(event, '{EXCHANGE}', '{MARKET}', '{START_DATE}', '{END_DATE}')
+cl.init_replayer(on_event, '{EXCHANGE}', '{MARKET}', '{START_DATE}', '{END_DATE}')
 
 # On event - callback
-def event(self, trade, message=None):
+def on_event(self, trade, message=None):
 
     if(message):
         print(message)
