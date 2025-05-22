@@ -52,22 +52,22 @@ Console.WriteLine("Verison: " + CryptoLab.CryptoLabAPI.version().ToString());
 CryptoLabAPI client = new CryptoLabAPI("{YOUR_API_KEY}", true);
 
 // Get list of exchanges available and displayt it
-List<Exchange> exchanges = client.get_exchanges();
-foreach(Exchange exchange in exchanges)
-    Console.WriteLine(exchange.exchange);
+List<string> exchanges = client.get_exchanges();
+foreach(string exchange in exchanges)
+    Console.WriteLine(exchange);
 
 // Get list of markets available for binance
-List<Market> markets = client.get_markets(new Exchange { exchange = "binance" });
+List<Market> markets = client.get_markets("binance");
 Console.WriteLine(markets.Count + " markets available for Binance");
 foreach (Market market in markets)
-    Console.WriteLine("Market " + market.market + ": data available from " + market.first_record + " to " + market.last_record + ". Total size " + ConvertBytes(market.bytes));
+    Console.WriteLine("Market " + market.market + ": data available from " + market.first_record + " to " + market.last_record);
 
-// Init the replay data for
-client.init_replay(callback, new Exchange { exchange = "binance" }, new Market { market = "btc_usdt" }, "2022-05-07", "2022-06-07", false);
+// Init the replay data
+client.init_replay(callback, "binance", "btc_usdt", "2022-05-07", "2022-07-10", false);
 client.start_replay();
 Console.WriteLine("Strating replay for Binance btc_usdt (downloading data in " + client.get_cache_directory() + ". Could be long)");
 
-// Callback on event (message or trade)
+// Callback on event (trade and orderbook)
 void  callback(object data)
 {
     /* Add your trading algorithm here */
