@@ -27,17 +27,11 @@ namespace CryptoLab {
         public InformationMarket results { get; set; }
     }
 
-    // Class for list of exchanges
-    public class Exchange
-    {
-        public string exchange { get; set; }
-    }
-
     public class RootObjectExchanges
     {
         public bool success { get; set; }
         public string message { get; set; }
-        public List<Exchange> results { get; set; }
+        public List<string> results { get; set; }
     }
 
 

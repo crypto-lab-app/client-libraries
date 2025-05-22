@@ -8,6 +8,7 @@ __pycache__
 # .NET
 .NET/cryptoLab/.vs
 .NET/cryptoLab/cryptoLab.sln
+.NET/cryptoLab/CryptoLab.slnLaunch.user
 .NET/cryptoLab/TestLib
 .NET/cryptoLab/cryptoLab/bin
 .NET/cryptoLab/cryptoLab/obj

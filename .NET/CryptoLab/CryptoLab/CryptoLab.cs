@@ -29,8 +29,8 @@ namespace CryptoLab
         private ShouldTread thread_shouldState = ShouldTread.Run;
         public delegate void CallBack(object data);
         private CallBack callback = null;
-        private Exchange replay_exchange = null;
-        private Market replay_market = null;
+        private string replay_exchange = null;
+        private string replay_market = null;
         private string replay_type = null;
         private string replay_start_date = null;
         private string replay_end_date = null;
@@ -54,7 +54,7 @@ namespace CryptoLab
         /// <summary>
         /// Initialize the client
         /// </summary>
-        /// <param name="apiKey">Your API key (find it in your account on market-lab.app)</param>
+        /// <param name="apiKey">Your API key (find it in your account on crypto-lab.app)</param>
         /// <param name="show_errors">Show the error with popup during the replay</param>
         public CryptoLabAPI(string apiKey, bool show_errors = true)
         {
@@ -78,7 +78,7 @@ namespace CryptoLab
         /// Get list of exchanges
         /// </summary>
         /// <returns>Object with status of request and the list of exchanges</returns>
-        public List<Exchange> get_exchanges()
+        public List<string> get_exchanges()
         {
             try
             {
@@ -98,11 +98,11 @@ namespace CryptoLab
         /// </summary>
         /// <param name="exchange">Name of exchange</param>
         /// <returns></returns>
-        public List<Market> get_markets(Exchange exchange)
+        public List<Market> get_markets(string exchange)
         {
             try
             {
-                string json = this.execute_request("data/" + exchange.exchange + "/markets");
+                string json = this.execute_request("data/" + exchange + "/markets");
                 if (json != null)
                     return JsonSerializer.Deserialize<RootObjectMarkets>(json).results;
                 return null;
@@ -121,11 +121,11 @@ namespace CryptoLab
         /// <param name="start_date">Date to start 'YYYY-MM-DD'</param>
         /// <param name="end_date">Date to end 'YYYY-MM-DD'</param>
         /// <returns></returns>
-        public List<File> get_files(Exchange exchange, Market market, string start_date, string end_date)
+        public List<File> get_files(string exchange, string market, string start_date, string end_date)
         {
             try
             {
-                string json = this.execute_request("data/" + exchange.exchange.ToLower() + "/" + market.market.ToLower() + "/" + start_date + "/" + end_date);
+                string json = this.execute_request("data/" + exchange.ToLower() + "/" + market.ToLower() + "/" + start_date + "/" + end_date);
                 if (json != null)
                     return JsonSerializer.Deserialize<RootObjectFiles>(json).results;
                 return null;
@@ -169,7 +169,7 @@ namespace CryptoLab
         /// <param name="end_date">Date to end the replay</param>
         /// <param name="start">Set to true to start the replay directly</param>
         /// <returns></returns>
-        public bool init_replay(CallBack callback, Exchange exchange, Market market, string start_date, string end_date, bool start = false)
+        public bool init_replay(CallBack callback, string exchange, string market, string start_date, string end_date, bool start = false)
         {
             // Init data
             this.callback = new CallBack(callback);
@@ -239,7 +239,7 @@ namespace CryptoLab
             // For each file, read
             foreach (string date in dates_replayed)
             {
-                FileInfo file_trade = new FileInfo("./cache-cl/" + this.replay_exchange.exchange.ToLower() + "/" + this.replay_market.market.ToLower() + "/" + date + ".csv.gz");
+                FileInfo file_trade = new FileInfo("./cache-cl/" + this.replay_exchange.ToLower() + "/" + this.replay_market.ToLower() + "/" + date + ".csv.gz");
                 // Tests files
                 if ((this.replay_type == null || this.replay_type == "trade") && file_trade.Exists == false)
                 {
@@ -338,7 +338,7 @@ namespace CryptoLab
         /// <param name="end_date">Date of the last file to downlaod</param>
         /// <param name="type">Type of data ('trade' or 'orderbook'. Set to null for both)</param>
         /// <returns></returns>
-        private bool download_files(Exchange exchange, Market market, string start_date, string end_date)
+        private bool download_files(string exchange, string market, string start_date, string end_date)
         {
             try
             {
@@ -357,7 +357,7 @@ namespace CryptoLab
                 foreach (File file in list_files)
                 {
                     // Output file
-                    output_path = new FileInfo("./cache-cl/" + exchange.exchange.ToLower() + "/" + market.market.ToLower() + "/" + file.date + ".csv.gz");
+                    output_path = new FileInfo("./cache-cl/" + exchange.ToLower() + "/" + market.ToLower() + "/" + file.date + ".csv.gz");
                     // If exists, no need to download
                     if (output_path.Exists)
                         continue;
@@ -366,7 +366,7 @@ namespace CryptoLab
                         Directory.CreateDirectory(output_path.DirectoryName);
 
                     // Prepare request
-                    RestRequest request = new RestRequest("data/file/" + exchange.exchange.ToLower() + "/" + market.market.ToLower() + "/" + file.date, Method.Get);
+                    RestRequest request = new RestRequest("data/file/" + exchange.ToLower() + "/" + market.ToLower() + "/" + file.date, Method.Get);
                     RestResponse response = client.Execute(request);
                     if (response.StatusCode != System.Net.HttpStatusCode.OK)
                         throw new Exception("Status code: " + response.StatusCode);
@@ -378,7 +378,7 @@ namespace CryptoLab
                     output.Close();
 
                     // Callback
-                    this.callback("File download: " + exchange.exchange.ToLower() + " " + market.market.ToLower() + " " + file.date);
+                    this.callback("File download: " + exchange.ToLower() + " " + market.ToLower() + " " + file.date);
                 }
                 return true;
             }
