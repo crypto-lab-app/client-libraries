@@ -95,4 +95,4 @@ Output:
 ## PHP
 soon
 
-![Logo](https://1.gravatar.com/avatar/5121577298f39a1661507198f8615319a7d7a14fad36f9ec52d20ae0d446bf69?size=128)
+![Logo](https://0.gravatar.com/avatar/bfc7517f0c195bb6ca79c763a7163880638282c445980bd77ac5f61cead1e5ae?size=128)
